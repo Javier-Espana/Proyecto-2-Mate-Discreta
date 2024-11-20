@@ -87,18 +87,53 @@ def mcd(a, b):
 
 print(mcd(0,54))
 
+# Función para generar matrices de factores
+def matrices_factores(factores):
+    matrices = []
+    for i in range(len(factores)):
+        matrices.append(np.array([[factores[i], 1],
+                                [1, 0]]))
+
 # Función para encontrar el inverso modular de un número e en módulo n
 def inverso_modular(e, n):
+
+    # Verificar si e y n son enteros positivos
+    if e <= 0 or n <= 0:
+        return None
+
+    # Verificar si e es menor que n
+    if e < n:
+        return e + n - 1
 
     # Verificar si el máximo común divisor de e y n es 1
     mcd_, factores = mcd(e, n)
 
     # Si el mcd no es 1, no hay inverso modular
-    if mcd != 1:
+    if mcd_ != 1 or len(factores) == 0:
         return None
     
-    # Inicializar las variables
+    # Inicializar las matrices de factores
+    matrices = matrices_factores(factores)
+    resultado = np.array([[1, 0], [0, 1]])
 
+    # Multiplicar todas las matrices de factores
+    for i in range(len(matrices)):
+        resultado = np.dot(resultado, matrices[i])
+
+    a = resultado[0][1]
+    b = resultado[1][1]
+
+    # Verificar si el inverso modular es positivo o negativo
+    if len(factores) % 2 == 0:
+        a = -a
+    else:
+        b = -b
     
+    for i in range(n):
+        x = a + i * n
+        if x < n and x >= 0:
+            return x
+    
+    return None
 
-print(inverso_modular(3, 12))
+print(inverso_modular(3, 11))
