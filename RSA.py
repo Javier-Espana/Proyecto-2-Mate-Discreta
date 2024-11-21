@@ -104,7 +104,6 @@ def desencriptar(cifrado, llave_privada):
 
 print(desencriptar(185, (103, 221))) # 42
 
-"""
 # Menú interactivo para el sistema RSA
 def menu():
     while True:
@@ -117,13 +116,19 @@ def menu():
         opcion = input("Seleccione una opción: ")
 
         if opcion == "1":
-            global rango_inferior, rango_superior
-            rango_inferior = int(input("Ingrese el rango inferior: "))
-            rango_superior = int(input("Ingrese el rango superior: "))
-            if rango_superior <= 2:
-                print("El rango superior debe ser mayor que 2. Intente de nuevo.")
-            else:
-                print(f"Rango establecido de {rango_inferior} a {rango_superior}")
+            while True:
+                global rango_inferior, rango_superior
+                rango_inferior = int(input("Ingrese el rango inferior: "))
+                rango_superior = int(input("Ingrese el rango superior: "))
+                if rango_superior <= 2:
+                    print("El rango superior debe ser mayor que 2. Intente de nuevo.")
+                elif rango_inferior >= rango_superior:
+                    print("El rango inferior debe ser menor que el rango superior. Intente de nuevo.")
+                elif generar_primo(rango_inferior, rango_superior) is None:
+                    print("No hay primos en el rango establecido. Intente de nuevo.")
+                else:
+                    print(f"Rango establecido de {rango_inferior} a {rango_superior}")
+                    break
         elif opcion == "2":
             if 'rango_inferior' not in globals() or 'rango_superior' not in globals() or rango_superior <= 2:
                 print("Primero debe establecer un rango válido para generar primos.")
@@ -153,26 +158,6 @@ def menu():
         else:
             print("Opción no válida. Intente de nuevo.")
 
-# Pruebas del sistema RSA
-def main():
-    rango_inferior = 50
-    rango_superior = 100
-
-    print("Generando llaves...")
-    llave_publica, llave_privada = generar_llaves(rango_inferior, rango_superior)
-    print(f"Clave pública: {llave_publica}")
-    print(f"Clave privada: {llave_privada}")
-
-    mensajes = [42, 89, 75]
-    for mensaje in mensajes:
-        print(f"\nMensaje original: {mensaje}")
-        cifrado = encriptar(mensaje, llave_publica)
-        print(f"Mensaje encriptado: {cifrado}")
-        desencriptado = desencriptar(cifrado, llave_privada)
-        print(f"Mensaje desencriptado: {desencriptado}")
-
 if __name__ == "__main__":
-    main()
     menu()
-    """
 
