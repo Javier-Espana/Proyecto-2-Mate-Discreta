@@ -68,6 +68,7 @@ def mcd(a, b):
         a, b = b, a % b
     return a
 
+print(mcd(54, 24)) # 6
 print(mcd(17, 31)) # 1
 
 # Algoritmo extendido de Euclides para encontrar el inverso modular
@@ -84,6 +85,7 @@ def inverso_modular(e, n):
         t += n
     return t
 
+print(inverso_modular(3, 11))  # 4
 print(inverso_modular(7, 40))  # 23
 
 # Encripta un número usando la llave pública
@@ -94,13 +96,22 @@ def encriptar(mensaje, llave_publica):
     return ((mensaje ** e) % n)
 
 print(encriptar(42, (7, 221))) # 185
+print(encriptar(15, (5, 889))) # 169
 
 # Desencripta un número usando la llave privada
 def desencriptar(cifrado, llave_privada):
     d, n = llave_privada
     return (cifrado ** d) % n
 
-print(desencriptar(196, (103, 221))) # 53
+print(desencriptar(185, (103, 221))) # 42
+print(desencriptar(169, (77, 889))) # 15
+
+"""
+Ayúdame a encontrar el d.
+169 = c
+889 = n
+m = 15
+"""
 
 """
 # Menú interactivo para el sistema RSA
