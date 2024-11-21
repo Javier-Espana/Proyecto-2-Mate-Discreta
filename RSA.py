@@ -24,7 +24,7 @@ def generar_primo(a, b):
     primos = [x for x in range(a, b + 1) if is_prime(x)]
     return random.choice(primos) if primos else None
 
-#print(generar_primo(90, 96))  # 53
+print(generar_primo(90, 96)) # None
 
 # Genera las llaves pública y privada para RSA
 def generar_llaves(rango_inferior, rango_superior):
@@ -68,7 +68,7 @@ def mcd(a, b):
         a, b = b, a % b
     return a
 
-#print(mcd(17, 31))  # 5
+print(mcd(17, 31)) # 1
 
 # Algoritmo extendido de Euclides para encontrar el inverso modular
 def inverso_modular(e, n):
@@ -84,7 +84,7 @@ def inverso_modular(e, n):
         t += n
     return t
 
-#print(inverso_modular(7, 40))
+print(inverso_modular(7, 40))  # 23
 
 # Encripta un número usando la llave pública
 def encriptar(mensaje, llave_publica):
@@ -93,14 +93,14 @@ def encriptar(mensaje, llave_publica):
         raise ValueError("El mensaje debe ser un número positivo menor que n")
     return ((mensaje ** e) % n)
 
-#print(encriptar(42, (7, 221)))
+print(encriptar(42, (7, 221))) # 185
 
 # Desencripta un número usando la llave privada
 def desencriptar(cifrado, llave_privada):
     d, n = llave_privada
     return (cifrado ** d) % n
 
-print(desencriptar(196, (103, 221)))
+print(desencriptar(196, (103, 221))) # 53
 
 """
 # Menú interactivo para el sistema RSA
