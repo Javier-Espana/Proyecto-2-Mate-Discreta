@@ -26,6 +26,31 @@ def generar_primo(a, b):
 
 #print(generar_primo(90, 96))  # 53
 
+# Genera las llaves pública y privada para RSA
+def generar_llaves(rango_inferior, rango_superior):
+    p = generar_primo(rango_inferior, rango_superior)
+    q = generar_primo(rango_inferior, rango_superior)
+    while q == p:  # Asegurarse de que p y q sean distintos
+        q = generar_primo(rango_inferior, rango_superior)
+
+    n = p * q
+    phi = (p - 1) * (q - 1)
+
+    e = random.choice([x for x in range(2, phi) if mcd(x, phi) == 1])
+    d = inverso_modular(e, phi)
+
+    # Asegurarse de que e y d sean distintos
+    attempts = 0
+    while e == d and attempts < 100:
+        e = random.choice([x for x in range(2, phi) if mcd(x, phi) == 1])
+        d = inverso_modular(e, phi)
+        attempts += 1
+
+    if e == d:
+        return None  # No se pudieron generar llaves distintas
+
+    return (e, n), (d, n)
+
 # Algoritmo de Euclides para el máximo común divisor
 def mcd(a, b):
     # Programación defensiva: asegurar que los inputs sean enteros positivos
@@ -60,31 +85,6 @@ def inverso_modular(e, n):
     return t
 
 #print(inverso_modular(7, 40))
-
-# Genera las llaves pública y privada para RSA
-def generar_llaves(rango_inferior, rango_superior):
-    p = generar_primo(rango_inferior, rango_superior)
-    q = generar_primo(rango_inferior, rango_superior)
-    while q == p:  # Asegurarse de que p y q sean distintos
-        q = generar_primo(rango_inferior, rango_superior)
-
-    n = p * q
-    phi = (p - 1) * (q - 1)
-
-    e = random.choice([x for x in range(2, phi) if mcd(x, phi) == 1])
-    d = inverso_modular(e, phi)
-
-    # Asegurarse de que e y d sean distintos
-    attempts = 0
-    while e == d and attempts < 100:
-        e = random.choice([x for x in range(2, phi) if mcd(x, phi) == 1])
-        d = inverso_modular(e, phi)
-        attempts += 1
-
-    if e == d:
-        return None  # No se pudieron generar llaves distintas
-
-    return (e, n), (d, n)
 
 # Encripta un número usando la llave pública
 def encriptar(mensaje, llave_publica):
