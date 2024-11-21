@@ -96,7 +96,6 @@ def encriptar(mensaje, llave_publica):
     return ((mensaje ** e) % n)
 
 print(encriptar(42, (7, 221))) # 185
-print(encriptar(15, (5, 889))) # 169
 
 # Desencripta un número usando la llave privada
 def desencriptar(cifrado, llave_privada):
@@ -104,14 +103,6 @@ def desencriptar(cifrado, llave_privada):
     return (cifrado ** d) % n
 
 print(desencriptar(185, (103, 221))) # 42
-print(desencriptar(169, (77, 889))) # 15
-
-"""
-Ayúdame a encontrar el d.
-169 = c
-889 = n
-m = 15
-"""
 
 """
 # Menú interactivo para el sistema RSA
